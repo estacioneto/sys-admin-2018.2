@@ -77,7 +77,7 @@ crontab custom_cron
 rm custom_cron
 
 backup_script_name="lp_backup"
-mv "backup.sh" "$base_dir/$backup_script_name"
+mv "backup_reports.sh" "$base_dir/$backup_script_name"
 
 # instala script de relatório com permissão de root em execução
 report_script_name="lp_report"
