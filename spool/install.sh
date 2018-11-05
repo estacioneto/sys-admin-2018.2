@@ -64,7 +64,11 @@ mv "print.sh" $lp_location
 
 chmod u+s $lp_location
 
-# TODO: instalar crontab
+# instalar crontab
+crontab -l > custom_cron 2> /dev/null
+cat cronjob >> custom_cron
+crontab custom_cron
+rm custom_cron
 
 # instala script de relatório com permissão de root em execução
 report_script_name="lp_report"
