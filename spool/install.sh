@@ -28,7 +28,6 @@ while getopts ":hl:" opt; do
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
-      print_help
       ;;
     :)
       echo "Option -$OPTARG requires an argument." >&2
