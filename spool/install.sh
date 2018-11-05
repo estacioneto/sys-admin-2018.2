@@ -63,7 +63,7 @@ chmod 744 "$base_dir/$lp_script"
 # instala nosso script de `lp` com permissão de root em execução
 mv "print.sh" $lp_location
 
-chmod +s $lp_location
+chmod u+s $lp_location
 
 # TODO: instalar crontab
 
@@ -72,5 +72,5 @@ report_script_name="lp_report"
 
 mv "report.sh" "$base_dir/$report_script_name"
 
-chmod +s "$base_dir/$report_script_name"
+chmod u+s "$base_dir/$report_script_name"
 
