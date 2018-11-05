@@ -39,14 +39,14 @@ done
 
 usuarios=`cat /etc/passwd | grep -v -E '(nologin|false|sync)' | cut -d ':' -f1`
 
-# cria diretorios em /var/lib/spooler
-mkdir -p /var/lib/spooler
+# cria diretorios em /var/lib/spool
+mkdir -p /var/lib/spool
 
-mkdir -p /var/lib/spooler/backup
+mkdir -p /var/lib/spool/backup
 
 # renomeia script de `lp` com permissões restritas
 lp_location=`which lp`
-lp_script="lp.orig"
+lp_new_script="lp.orig"
 
 if [ -z "$lp_location" ]; then
   echo -e "The binary file \`lp\` was not found" &>2
@@ -55,9 +55,10 @@ fi
 
 base_dir=`dirname $lp_location`
 
-mv $lp_location "$base_dir/$lp_script"
+mv $lp_location "$base_dir/$lp_new_script"
+ln -s "$base_dir/$lp_new_script"
 
-chmod 744 "$base_dir/$lp_script"
+chmod 744 "$base_dir/$lp_new_script"
 
 # instala nosso script de `lp` com permissão de root em execução
 mv "print.sh" $lp_location
