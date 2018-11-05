@@ -37,12 +37,18 @@ while getopts ":hl:" opt; do
   esac
 done
 
-usuarios=`cat /etc/passwd | grep -v -E '(nologin|false|sync)' | cut -d ':' -f1`
+users=`cat /etc/passwd | grep -v -E '(nologin|false|sync)' | cut -d ':' -f1`
 
 # cria diretorios em /var/lib/spooler
 mkdir -p /var/lib/spooler
 
 mkdir -p /var/lib/spooler/backup
+
+# salva cota e usuários
+echo $user_quota_limit > /var/lib/spooler/quota
+echo $users > /var/lib/spooler/users
+
+chmod -w /var/lib/spooler/quota
 
 # renomeia script de `lp` com permissões restritas
 lp_location=`which lp`
@@ -66,9 +72,12 @@ chmod u+s $lp_location
 
 # instalar crontab
 crontab -l > custom_cron 2> /dev/null
-cat cronjob >> custom_cron
+cat crontab >> custom_cron
 crontab custom_cron
 rm custom_cron
+
+backup_script_name="lp_backup"
+mv "backup.sh" "$base_dir/$backup_script_name"
 
 # instala script de relatório com permissão de root em execução
 report_script_name="lp_report"
