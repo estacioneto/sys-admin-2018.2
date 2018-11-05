@@ -40,8 +40,10 @@ done
 
 usuarios=`cat /etc/passwd | grep -v -E '(nologin|false|sync)' | cut -d ':' -f1`
 
-# cria diretorio /var/lib/spooler
+# cria diretorios em /var/lib/spooler
 mkdir -p /var/lib/spooler
+
+mkdir -p /var/lib/spooler/backup
 
 # renomeia script de `lp` com permissões restritas
 lp_location=`which lp`
