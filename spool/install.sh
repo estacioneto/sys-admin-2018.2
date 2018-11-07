@@ -45,10 +45,10 @@ mkdir -p /var/lib/spool
 mkdir -p /var/lib/spool/backup
 
 # salva cota e usuários
-echo $user_quota_limit > /var/lib/spooler/quota
-echo $users > /var/lib/spooler/users
+echo $user_quota_limit > /var/lib/spool/quota
+echo $users > /var/lib/spool/users
 
-chmod -w /var/lib/spooler/quota
+chmod -w /var/lib/spool/quota
 
 # renomeia script de `lp` com permissões restritas
 lp_location=`which lp`
