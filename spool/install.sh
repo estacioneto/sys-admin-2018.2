@@ -74,7 +74,8 @@ base_dir=`dirname $lp_location`
 log "Renaming \`lp\` script and removing permissions"
 mv $lp_location "$base_dir/$lp_new_script"
 
-chmod 744 "$base_dir/$lp_new_script"
+# FIXME: o setuid so funciona pra arquivos binários
+# chmod 744 "$base_dir/$lp_new_script"
 
 # instala nosso script de `lp` com permissão de root em execução
 log "Installing custom \`lp\` script"
