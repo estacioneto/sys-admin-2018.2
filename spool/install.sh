@@ -73,7 +73,6 @@ base_dir=`dirname $lp_location`
 
 log "Renaming \`lp\` script and removing permissions"
 mv $lp_location "$base_dir/$lp_new_script"
-ln -fs "$base_dir/$lp_new_script" /var/lib/spool/lp
 
 chmod 744 "$base_dir/$lp_new_script"
 

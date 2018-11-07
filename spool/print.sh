@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LP_SCRIPT=/var/lib/spool/lp
+LP_SCRIPT=/usr/bin/lp.orig
 
 # TODO: implement authentication
 
