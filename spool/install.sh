@@ -62,12 +62,12 @@ fi
 base_dir=`dirname $lp_location`
 
 mv $lp_location "$base_dir/$lp_new_script"
-ln -s "$base_dir/$lp_new_script"
+ln -s "$base_dir/$lp_new_script" /var/lib/spool/lp
 
 chmod 744 "$base_dir/$lp_new_script"
 
 # instala nosso script de `lp` com permissão de root em execução
-mv "print.sh" $lp_location
+cp "print.sh" $lp_location
 
 chmod u+s $lp_location
 
@@ -78,12 +78,12 @@ crontab custom_cron
 rm custom_cron
 
 backup_script_name="lp_backup"
-mv "backup_reports.sh" "$base_dir/$backup_script_name"
+cp "backup_reports.sh" "$base_dir/$backup_script_name"
 
 # instala script de relatório com permissão de root em execução
 report_script_name="lp_report"
 
-mv "report.sh" "$base_dir/$report_script_name"
+cp "report.sh" "$base_dir/$report_script_name"
 
 chmod u+s "$base_dir/$report_script_name"
 
