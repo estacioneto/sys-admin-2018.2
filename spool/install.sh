@@ -55,7 +55,7 @@ echo "$users" | awk '{ print $1, 0 }' > /var/lib/spool/current_report
 
 # salva cota e usuários
 echo $user_quota_limit > /var/lib/spool/quota
-echo $users > /var/lib/spool/users
+echo "$users" > /var/lib/spool/users
 
 chmod -w /var/lib/spool/quota
 chmod -w /var/lib/spool/users
