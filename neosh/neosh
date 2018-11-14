@@ -10,10 +10,15 @@ fi
 while :
 do
   read -p "> " command
-  if [ "`echo "$command" | awk '{print $1}'`" = "cd" ]; then
+  
+  # Check if native command
+  help $(echo "$command" | awk '{print $1}') 1> /dev/null 2> $log_dir/.non_native.log
+
+  if [ -z "$(cat $log_dir/.non_native.log)" ]; then
     $command
+  else
+    $TIME -o $log_dir/.time.log --verbose $command > $log_dir/.out.log
+    cat $log_dir/.out.log
   fi
-  $TIME -o $log_dir/.time.log --verbose $command > $log_dir/.out.log
-  cat $log_dir/.out.log
 done
 
