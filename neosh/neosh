@@ -1,0 +1,19 @@
+#!/bin/bash
+
+log_dir=~/.local/share/neosh
+TIME=`which time`
+
+if [ ! -d $log_dir ]; then
+  mkdir -p $log_dir
+fi
+
+while :
+do
+  read -p "> " command
+  if [ "`echo "$command" | awk '{print $1}'`" = "cd" ]; then
+    $command
+  fi
+  $TIME -o $log_dir/.time.log --verbose $command > $log_dir/.out.log
+  cat $log_dir/.out.log
+done
+
