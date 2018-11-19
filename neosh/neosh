@@ -2,6 +2,17 @@
 
 history -r $HOME/.bash_history
 
+trap help_exit SIGINT
+trap finish EXIT
+
+function help_exit {
+  echo -e "\nTo exit the shell, use the command \`exit\`"
+}
+
+function finish {
+  history -w $HOME/.bash_history
+}
+
 log_dir=~/.local/share/neosh
 
 if [ ! -d $log_dir ]; then
@@ -21,11 +32,9 @@ do
 
     history -s "$cmd"
   else
-    command time -o $log_dir/.time.log --verbose sh -c "$cmd"
+    command time -ao $log_dir/.time.log --verbose sh -c "$cmd"
 
     history -s "$cmd"
   fi
 done
-
-history -w $HOME/.bash_history
 
