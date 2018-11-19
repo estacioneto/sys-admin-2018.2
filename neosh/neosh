@@ -1,7 +1,8 @@
 #!/bin/bash
 
+history -r $HOME/.bash_history
+
 log_dir=~/.local/share/neosh
-TIME=`which time`
 
 if [ ! -d $log_dir ]; then
   mkdir -p $log_dir
@@ -10,15 +11,21 @@ fi
 while :
 do
   PWD=`pwd`
-  read -ep "$(whoami)@$(hostname):[$(echo "${PWD/#$HOME/\~}")] $ " command
-  
+  read -ep "$(whoami)@$(hostname):[$(echo "${PWD/#$HOME/\~}")] $ " cmd
+
   # Check if native command
-  help $(echo "$command" | awk '{print $1}') 1> /dev/null 2> $log_dir/.non_native.log
+  help $(echo "$cmd" | awk '{print $1}') 1> /dev/null 2> $log_dir/.non_native.log
 
   if [ -z "$(cat $log_dir/.non_native.log)" ]; then
-    $command
+    eval $cmd
+
+    history -s "$cmd"
   else
-    $TIME -o $log_dir/.time.log --verbose $command 
+    command time -o $log_dir/.time.log --verbose sh -c "$cmd"
+
+    history -s "$cmd"
   fi
 done
+
+history -w $HOME/.bash_history
 
