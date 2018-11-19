@@ -24,6 +24,13 @@ do
   PWD=`pwd`
   read -ep "$(whoami)@$(hostname):[$(echo "${PWD/#$HOME/\~}")] $ " cmd
 
+  read_code=$?
+
+  if [ $read_code -eq 1 ]; then
+    echo
+    exit 1
+  fi
+
   # Check if native command
   help $(echo "$cmd" | awk '{print $1}') 1> /dev/null 2> $log_dir/.non_native.log
 
