@@ -2,18 +2,15 @@
 
 history -r $HOME/.bash_history
 
-trap help_exit SIGINT
 trap finish EXIT
-
-function help_exit {
-  echo -e "\nTo exit the shell, use the command \`exit\`"
-}
 
 function finish {
   history -w $HOME/.bash_history
 }
 
-log_dir=~/.local/share/neosh
+log_dir=$HOME/.local/share/neosh
+non_native_logfile="$log_dir/non_native.log"
+logfile="$log_dir/time.log"
 
 if [ ! -d $log_dir ]; then
   mkdir -p $log_dir
@@ -32,14 +29,14 @@ do
   fi
 
   # Check if native command
-  help $(echo "$cmd" | awk '{print $1}') 1> /dev/null 2> $log_dir/.non_native.log
+  help $(echo "$cmd" | awk '{print $1}') 1> /dev/null 2> $non_native_logfile
 
-  if [ -z "$(cat $log_dir/.non_native.log)" ]; then
+  if [ -z "$(cat $non_native_logfile)" ]; then
     eval $cmd
 
     history -s "$cmd"
   else
-    command time -ao $log_dir/.time.log --verbose sh -c "$cmd"
+    command time -a -o $logfile --format="$(date +%m/%y),%S,%U,%C" sh -c "$cmd"
 
     history -s "$cmd"
   fi
