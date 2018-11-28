@@ -1,0 +1,12 @@
+#!/bin/bash
+
+log_file=~/.local/share/neosh/time.log
+
+dates=`cat $log_file | cut -d , -f1 | uniq` 
+echo -e "-------- Time --------\n"
+for d in $dates ;do
+  commands=`cat $log_file | grep -E ^$d,`
+  sum=`echo "$commands" | awk -F , '{ sys+=$2; usr+=$3 } END { print sys,usr }'`
+  echo -e "Month/Year: $d | Sys Time: $(echo "$sum" | cut -d ' ' -f1)s | Usr Time: $(echo "$sum" | cut -d ' ' -f2)s"
+done
+

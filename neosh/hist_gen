@@ -1,0 +1,13 @@
+#!/bin/bash
+
+log_file=$HOME/.local/share/neosh/time.log
+
+dates=`cat $log_file | cut -d , -f1 | uniq`
+
+echo -e "------- Histogram --------\n"
+
+for d in $dates; do
+  cmds=`cat $log_file | grep -E ^$d, | cut -d , -f4- | sed 's/^sh -c //' | sort | uniq -c | sort -nr`
+  echo -e "\nMonth/Year: $d\n"
+  echo "$cmds"
+done
